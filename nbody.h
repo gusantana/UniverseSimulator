@@ -5,10 +5,11 @@
 
 FILE * arquivo;
 
+
 typedef struct Body
 {
     long double Px, Py, Vx, Vy, m;
-};
+} Body;
 
 
 Body * corpos;
@@ -16,22 +17,21 @@ Body * corpos;
 /**
     Posição
 */
-long double * corpos_px;
-long double * corpos_py;
+double * corpos_px;
+double * corpos_py;
 
 /**
     Vetor velocidade
 */
-long double * corpos_vx;
-long double * corpos_vy;
+double * corpos_vx;
+double * corpos_vy;
 
 /**
     Massa
 */
-long double * corpos_m;
+double * corpos_m;
 
-unsigned int totalCorpos;
-long double tamanhoUniverso;
+unsigned int totalCorpos    = 0;
+double tamanhoUniverso      = 0.0;
 
-
-int init();
+int pre_init();
