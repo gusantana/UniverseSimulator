@@ -100,3 +100,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+bin/Debug/
+
+obj/Debug/
+
+*.depend
+
+*.layout
