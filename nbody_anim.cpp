@@ -1,13 +1,11 @@
 #include <iostream>
 #include <fstream>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #include <sstream>
 #include <string>
 #include <cmath>
 
- 
+
 using namespace std;
 
 ifstream readFile;
@@ -23,48 +21,46 @@ string file("nbody_result.txt");
 
 struct Body{
   long double Px, Py,m;
-  
+
   void swap(Body& other){
     std::swap(Px, 	other.Px);
     std::swap(Py, 	other.Py);
     std::swap(m, 	other.m);
   }
-  
+
   friend istream& operator>>(istream& str, Body& data){
     string line,stmp;
     Body tmp;
     if(getline(str,line)){
       stringstream iss(line);
       getline(iss, stmp, ' ');
-      tmp.Px = stold(stmp);
+      tmp.Px = std::stold(stmp);
       getline(iss, stmp, ' ');
       tmp.Py = stold(stmp);
-      getline(iss, stmp, '\n');
-      tmp.m = stold(stmp);
-      
+
       data.swap(tmp);
     }
     return str;
   }
-  
+
 };
 
 Body body_input;
 
 void display(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glMatrixMode(GL_MODELVIEW);
    glPushMatrix();
    glRotatef(viewangle, 0.0, 1.0, 0.0);
    glRotatef(tippangle, 1.0, 0.0, 0.0);
    glColor3f(1.0, 1.0, 1.0);
-   
+
    Body body_input;
    GLUquadricObj *quad;
    quad = gluNewQuadric();
    gluQuadricDrawStyle(quad, GLU_FILL);
-   
+
    //glBegin(GL_POINTS);
    for(int i=0; i<n; i++){
      if(readFile.good()){
@@ -85,9 +81,9 @@ void display(void)
    }
    //glEnd();
    getline(readFile,input);
-   
+
    glPopMatrix();
-   
+
 
    glFlush();
 }
@@ -95,13 +91,13 @@ void display(void)
 void Keys (int key, int x, int y)
 {
     switch (key) {
- 
+
        case GLUT_KEY_LEFT :  viewangle -= 5;  break;
        case GLUT_KEY_RIGHT:  viewangle += 5;  break;
        case GLUT_KEY_UP   :  tippangle -= 5;  break;
        case GLUT_KEY_DOWN :  tippangle += 5;  break;
     }
- 
+
     glutPostRedisplay();
 }
 
@@ -120,7 +116,7 @@ void resize(int w, int h){
 }
 
 
-void init (void) 
+void init (void)
 {
   /* selecionar cor de fundo (preto) */
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -140,14 +136,14 @@ void init (void)
 
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-	
+
 	string line;
 	getline(readFile, line);
 	n = stoi(line);
-  
+
 	getline(readFile, line);
 	universe = stold(line);
-	
+
 }
 
 void timer(int value){
@@ -160,11 +156,11 @@ int main(int argc, char** argv)
    readFile.open(file, std::ifstream::in);
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_DEPTH | GLUT_SINGLE | GLUT_RGB);
-   glutInitWindowSize (550, 550); 
+   glutInitWindowSize (550, 550);
    glutInitWindowPosition (400, 500);
    glutCreateWindow ("N-Body Simulation");
    init ();
-   glutDisplayFunc(display); 
+   glutDisplayFunc(display);
    glutReshapeFunc(resize);
    glutSpecialFunc(Keys);
    glutTimerFunc(veloc_anim, timer, 1);

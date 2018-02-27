@@ -108,3 +108,7 @@ obj/Debug/
 *.depend
 
 *.layout
+
+cmake-build-debug/CMakeFiles/
+
+nbody_result\.txt

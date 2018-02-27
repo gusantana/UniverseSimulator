@@ -5,6 +5,9 @@
 
 FILE * arquivo;
 
+unsigned int delta_tempo = 200000;
+
+unsigned int frameTotal = 1000;
 
 typedef struct Body
 {
@@ -15,7 +18,7 @@ typedef struct Body
 Body * corpos;
 
 /**
-    Posição
+    PosiÃ§Ã£o
 */
 double * corpos_px;
 double * corpos_py;
@@ -35,3 +38,4 @@ unsigned int totalCorpos    = 0;
 double tamanhoUniverso      = 0.0;
 
 int pre_init();
+double **frames;
