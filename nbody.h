@@ -5,11 +5,14 @@
 #include <GL/freeglut.h>
 //#include <pthread.h>
 
+unsigned threads[4];
+
 FILE * arquivo;
+FILE *arquivo_saida;
 
-unsigned int delta_tempo = 400;
+unsigned int delta_tempo = 1000;
 
-unsigned int frameTotal = 40000;
+unsigned int frameTotal = 2000;
 
 typedef struct Body
 {

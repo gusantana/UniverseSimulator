@@ -35,20 +35,18 @@ int pre_init () {
     return 0;
 }
 
-void calcular (double *px, double *py, double *vx, double *vy, double *m) {
+void calcular (void **parametros){
+    unsigned idThread = 0;
+    printf("%u\n", idThread);
+    double *px = (double *)parametros[1], *py = (double *)parametros[2], *vx = (double *)parametros[3], *vy = (double *)parametros[4], *m = (double *)parametros[5];
+//    double *px, *py, double *vx, double *vy, double *m
     double delta_x, delta_y, a_x, a_y, distancia;
 
     double G = -6.67408E-11;
     double fx, fy, f;
-    char tamanhoUniverso [] = "156521362399";
-    FILE *arquivo_saida = fopen ("nbody_result.txt", "wt");
-    fprintf(arquivo_saida, "%u\n", totalCorpos);
-    fprintf(arquivo_saida, "%s\n", tamanhoUniverso);
-
-//    for (unsigned i = 0; i < totalCorpos;
 
     for (unsigned frame_atual = 0; frame_atual < frameTotal; frame_atual++) {
-        for (int i = 0; i < totalCorpos; i++) {
+        for (int i = 0 + idThread; i < totalCorpos; i = i + 1 + idThread) {
             a_x = a_y = 0.0;
             for (int j = 0; j < totalCorpos; j++) {
                 if (i == j) continue;
@@ -68,12 +66,10 @@ void calcular (double *px, double *py, double *vx, double *vy, double *m) {
             px[i] += delta_tempo * vx[i];
             py[i] += delta_tempo * vy[i];
 //            if (frame_atual == frameTotal - 1) {
-                fprintf(arquivo_saida, "%f %f %f %f %f %s\n", px[i], py[i], vx[i], vy[i], m[i], "star.gif");
+                fprintf(arquivo_saida, "%f %f %f %f %f %s\n", px[i] + 24916394166, py[i] + 24916394166, vx[i], vy[i], m[i], "star.gif");
 //            }
 
         }
         fprintf(arquivo_saida, "\n");
     }
-
-    fclose(arquivo_saida);
 }

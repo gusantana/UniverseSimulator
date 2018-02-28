@@ -12,6 +12,7 @@ ifstream readFile;
 string input;
 int n, viewangle, tippangle;
 long double universe;
+void init (void);
 
 // Tempo entre os quadros da animação. Quanto maior a precisão da simulação, menor deve ser o intervalo de tempo.
 float veloc_anim = 1;
@@ -46,6 +47,7 @@ struct Body{
 };
 
 Body body_input;
+unsigned quadro_atual = 0;
 
 void display(void)
 {
@@ -62,7 +64,7 @@ void display(void)
    gluQuadricDrawStyle(quad, GLU_FILL);
 
    //glBegin(GL_POINTS);
-   for(int i=0; i<n; i++){
+   for(quadro_atual = 0; quadro_atual < n; quadro_atual++){
      if(readFile.good()){
 	readFile >> body_input;
 	//glVertex3d(body_input.Px/universe, body_input.Py/universe, 0.0);
@@ -76,7 +78,7 @@ void display(void)
 	readFile.open(file, std::ifstream::in);
 	getline(readFile, input);
 	getline(readFile, input);
-	i=-1;
+    quadro_atual=-1;
      }
    }
    //glEnd();
@@ -96,6 +98,12 @@ void Keys (int key, int x, int y)
        case GLUT_KEY_RIGHT:  viewangle += 5;  break;
        case GLUT_KEY_UP   :  tippangle -= 5;  break;
        case GLUT_KEY_DOWN :  tippangle += 5;  break;
+        case GLUT_KEY_HOME :
+            quadro_atual = 0;
+            readFile.close();
+            readFile.open(file, std::ifstream::in);
+            init();
+            break;
     }
 
     glutPostRedisplay();
@@ -156,8 +164,8 @@ int main(int argc, char** argv)
    readFile.open(file, std::ifstream::in);
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_DEPTH | GLUT_SINGLE | GLUT_RGB);
-   glutInitWindowSize (550, 550);
-   glutInitWindowPosition (400, 500);
+   glutInitWindowSize (1024, 768);
+   glutInitWindowPosition (0, 0);
    glutCreateWindow ("N-Body Simulation");
    init ();
    glutDisplayFunc(display);
