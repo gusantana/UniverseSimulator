@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <GL/freeglut.h>
+//#include <pthread.h>
 
 FILE * arquivo;
 
-unsigned int delta_tempo = 200000;
+unsigned int delta_tempo = 400;
 
-unsigned int frameTotal = 1000;
+unsigned int frameTotal = 40000;
 
 typedef struct Body
 {
